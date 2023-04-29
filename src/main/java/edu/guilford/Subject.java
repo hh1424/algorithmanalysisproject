@@ -178,74 +178,88 @@ public class Subject {
     public void setSpecies(String species) {
         this.species = species;
     }
-    
-    
-
 
     //Add a static selectionsort method that takes an array of integers as a parameter
-    //and sorts the array in using the selection sort algorithm
-    public static void selectionSort(int[] array) {
-        //loop through the array
-        for (int i = 0; i < array.length - 1; i++) {
-            //find the minimum value in the array
-            int min = i;
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[j]< array[min]) {
-                    min = j;
+    //and sorts the array by age
+    public static void selectionSort(int[] subject) {
+        for (int i = 0; i < subject.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < subject.length; j++) {
+                if (subject[j] < subject[minIndex]) {
+                    minIndex = j;
                 }
             }
-            //swap the minimum value with the first value in the array
-            int temp = array[min];
-            array[min] = array[i];
-            array[i] = temp;
+            //Swap the smallest element with the first element
+            swap(subject, i, minIndex);
         }
     }
 
-    //Add a static quicksort method that takes an array of integers as a parameter
-    //and sorts the array in using the quicksort algorithm
-    public static void quickSort(int[] array, int low, int high) {
-        //check to see if the array is empty
-        if (array == null || array.length == 0) {
-            return;
-        }
-        //check to see if the low value is less than the high value
-        if (low >= high) {
-            return;
-        }
-        //pick the pivot
-        int middle = low + (high - low) / 2;
-        int pivot = array[middle];
-        //make left < pivot and right > pivot
-        int i = low, j = high;
-        while (i <= j) {
-            //check to see if the left value is less than the pivot
-            while (array[i] < pivot) {
-                i++;
-            }
-            //check to see if the right value is greater than the pivot
-            while (array[j] > pivot) {
-                j--;
-            }
-            //swap the values
-            if (i <= j) {
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-                //move index to next position on both sides
-                i++;
-                j--;
-            }
-        }
-        //call quickSort() method recursively
-        if (low < j) {
-            quickSort(array, low, j);
-        }
-        if (high > i) {
-            quickSort(array, i, high);
+    //Add a static quickSort method that takes an array of integers as a parameter
+    //and sorts the array using the quick sort algorithm
+    public static void quickSort(int[] subject) {
+        quickSort(subject, 0, subject.length - 1);
+    }
+
+    //Add a static quickSort method that takes an array of integers as a parameter
+    //and sorts the array using the quick sort algorithm
+    //This method is recursive
+    private static void quickSort(int[] subject, int first, int last) {
+        if (last > first) {
+            int partitionIndex = partition(subject, first, last);
+            quickSort(subject, first, partitionIndex - 1);
+            quickSort(subject, partitionIndex + 1, last);
         }
     }
 
+    //Add a static partition method that takes an array of integers as a parameter
+    //and partitions the array using the quick sort algorithm
+    private static int partition(int[] subject, int first, int last) {
+        int pivot = subject[last];
+        int partitionIndex = first;
+        for (int j = first; j < last; j++) {
+            if (subject[j] <= pivot) {
+                swap(subject, j, partitionIndex);
+                partitionIndex++;
+            }
+        }
+        swap(subject, partitionIndex, last);
+        return partitionIndex;
+    }
     
+    // Add a static method to swap two elements in an array
+    public static void swap(int[] subject, int i, int j) {
+        int temp = subject[i];
+        subject[i] = subject[j];
+        subject[j] = temp;
+    }
 
+    //Add a linear or sequential search algorithm
+    public static int linearSearch(int[] subject, int key) {
+        for (int i = 0; i < subject.length; i++) {
+            if (subject[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //Add a binary search algorithm
+    public static int binarySearch(int[] subject, int key) {
+        int low = 0;
+        int high = subject.length - 1;
+        while (high >= low) {
+            int mid = (low + high) / 2;
+            if (subject[mid] == key) {
+                return mid;
+            }
+            if (subject[mid] > key) {
+                high = mid - 1;
+            } 
+            if (subject[mid] < key) {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
 
 }
