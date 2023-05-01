@@ -179,64 +179,64 @@ public class Subject {
         this.species = species;
     }
 
-    //Add a static selectionsort method that takes an array of integers as a parameter
+    //Add a static selectionSort method that takes an array of integers as a parameter
     //and sorts the array by age
-    public static void selectionSort(int[] subject) {
-        for (int i = 0; i < subject.length - 1; i++) {
+    public static void selectionSort(Subject[] subjects) {
+        for (int i = 0; i < subjects.length - 1; i++) {
             int minIndex = i;
-            for (int j = i + 1; j < subject.length; j++) {
-                if (subject[j] < subject[minIndex]) {
+            for (int j = i + 1; j < subjects.length; j++) {
+                if (subjects[j].getAge() < subjects[minIndex].getAge()) {
                     minIndex = j;
                 }
             }
             //Swap the smallest element with the first element
-            swap(subject, i, minIndex);
+            swap(subjects, i, minIndex);
         }
     }
 
     //Add a static quickSort method that takes an array of integers as a parameter
     //and sorts the array using the quick sort algorithm
-    public static void quickSort(int[] subject) {
-        quickSort(subject, 0, subject.length - 1);
+    public static void quickSort(Subject[] subjects) {
+        quickSort(subjects, 0, subjects.length - 1);
     }
 
     //Add a static quickSort method that takes an array of integers as a parameter
     //and sorts the array using the quick sort algorithm
     //This method is recursive
-    private static void quickSort(int[] subject, int first, int last) {
+    private static void quickSort(Subject[] subjects, int first, int last) {
         if (last > first) {
-            int partitionIndex = partition(subject, first, last);
-            quickSort(subject, first, partitionIndex - 1);
-            quickSort(subject, partitionIndex + 1, last);
+            int partitionIndex = partition(subjects, first, last);
+            quickSort(subjects, first, partitionIndex - 1);
+            quickSort(subjects, partitionIndex + 1, last);
         }
     }
 
     //Add a static partition method that takes an array of integers as a parameter
     //and partitions the array using the quick sort algorithm
-    private static int partition(int[] subject, int first, int last) {
-        int pivot = subject[last];
+    private static int partition(Subject[] subjects, int first, int last) {
+        int pivot = subjects[last].getAge();
         int partitionIndex = first;
         for (int j = first; j < last; j++) {
-            if (subject[j] <= pivot) {
-                swap(subject, j, partitionIndex);
+            if (subjects[j].getAge() <= pivot) {
+                swap(subjects, j, partitionIndex);
                 partitionIndex++;
             }
         }
-        swap(subject, partitionIndex, last);
+        swap(subjects, partitionIndex, last);
         return partitionIndex;
     }
-    
-    // Add a static method to swap two elements in an array
-    public static void swap(int[] subject, int i, int j) {
-        int temp = subject[i];
-        subject[i] = subject[j];
-        subject[j] = temp;
+
+    //Add a static method to swap two elements in an array
+    public static void swap(Subject[] subjects, int i, int j) {
+        Subject temp = subjects[i];
+        subjects[i] = subjects[j];
+        subjects[j] = temp;
     }
 
     //Add a linear or sequential search algorithm
-    public static int linearSearch(int[] subject, int key) {
-        for (int i = 0; i < subject.length; i++) {
-            if (subject[i] == key) {
+    public static int linearSearch(Subject[] subjects, int key) {
+        for (int i = 0; i < subjects.length; i++) {
+            if (subjects[i].getAge() == key) {
                 return i;
             }
         }
@@ -244,18 +244,18 @@ public class Subject {
     }
 
     //Add a binary search algorithm
-    public static int binarySearch(int[] subject, int key) {
+    public static int binarySearch(Subject[] subjects, int key) {
         int low = 0;
-        int high = subject.length - 1;
+        int high = subjects.length - 1;
         while (high >= low) {
             int mid = (low + high) / 2;
-            if (subject[mid] == key) {
+            if (subjects[mid].getAge() == key) {
                 return mid;
             }
-            if (subject[mid] > key) {
+            if (subjects[mid].getAge() > key) {
                 high = mid - 1;
             } 
-            if (subject[mid] < key) {
+            if (subjects[mid].getAge() < key) {
                 low = mid + 1;
             }
         }
